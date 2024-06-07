@@ -50,6 +50,7 @@ const requiredFormsRouter = require("./routes/requiredForms");
 const masterAccessRouter = require("./routes/masterAccess");
 const affiliateAccessRouter = require("./routes/affiliation");
 const registerRouter = require("./routes/registered");
+const rejectRouter = require("./routes/rejectComments");
 
 // then use the required files .. each router will load the respective Router.
 // app.use("/exercises", exerciseRouter);
@@ -59,6 +60,7 @@ app.use("/requiredForms", requiredFormsRouter);
 app.use("/masterAccess", masterAccessRouter);
 app.use("/affiliate", affiliateAccessRouter);
 app.use("/registered", registerRouter);
+app.use("/rejectComments", rejectRouter);
 
 // Your middleware and routing here
 

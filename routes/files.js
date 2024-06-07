@@ -35,7 +35,7 @@ router.route("/userData/:username").get((req, res) => {
 //   });
 // });
 
-router.route("/:username").get( (req, res) => {
+router.route("/:username").get((req, res) => {
   const username = req.params.username;
   // Handle the request for the specific username
   // ...
@@ -48,12 +48,16 @@ router.route("/add").post((req, res) => {
   const name = req.body.name;
   const affiliation = req.body.affiliation;
   const fileUrl = req.body.fileUrl;
+  const status = req.body.status;
+  const rejectComment = req.body.rejectComment;
   console.log(name);
 
   const newFileUpload = new File({
     name,
     affiliation,
     fileUrl,
+    status,
+    rejectComment,
   });
   // console.log("Trying to upload to Xref"+JSON.stringify(newFileUpload));
 
@@ -74,6 +78,36 @@ router.route("/:id").delete((req, res) => {
       .catch((err) => res.status(400).json("Error: " + err));
   } else {
     res.status(400).json("Invalid file ID");
+  }
+});
+
+// UPDATE request to delete a file by ID
+router.patch("/reject/:id", async (req, res) => {
+  const fileId = ObjectId.isValid(req.params.id)
+    ? new ObjectId(req.params.id)
+    : null;
+
+  if (!fileId) {
+    res.status(400).json("Invalid file ID");
+    return; // Exit early if fileId is invalid
+  }
+  //res.json("router.patch");
+  console.log("Patch Called: " + fileId);
+
+  try {
+    // Assuming you've connected to MongoDB and defined the File model
+    await File.updateMany(
+      { _id: fileId },
+      {
+        $set: {
+          status: "Rejected",
+        },
+      }
+    );
+    res.send(`Successfully updated status for ${fileId}!`);
+  } catch (err) {
+    console.error("Error updating document:", err.message);
+    res.status(500).send(err.message);
   }
 });
 
