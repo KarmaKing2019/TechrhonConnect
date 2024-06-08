@@ -111,4 +111,33 @@ router.patch("/reject/:id", async (req, res) => {
   }
 });
 
+router.patch("/approve/:id", async (req, res) => {
+  const fileId = ObjectId.isValid(req.params.id)
+    ? new ObjectId(req.params.id)
+    : null;
+
+  if (!fileId) {
+    res.status(400).json("Invalid file ID");
+    return; // Exit early if fileId is invalid
+  }
+  //res.json("router.patch");
+  console.log("Patch Called: " + fileId);
+
+  try {
+    // Assuming you've connected to MongoDB and defined the File model
+    await File.updateMany(
+      { _id: fileId },
+      {
+        $set: {
+          status: "Approved",
+        },
+      }
+    );
+    res.send(`Successfully updated status for ${fileId}!`);
+  } catch (err) {
+    console.error("Error updating document:", err.message);
+    res.status(500).send(err.message);
+  }
+});
+
 module.exports = router;
