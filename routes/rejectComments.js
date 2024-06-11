@@ -24,24 +24,37 @@ router.route("/").get((req, res) => {
 //     })
 //     .catch((err) => res.status(400).json({ message: "Error: " + err }));
 // });
+router.route("/pullreject/:id").get((req, res) => {
+  //"find()" mongoose method to get all users from MongoDB Atlas
+  // find() returns a promise in JSON format
+  const id = req.params.id;
+  RejectComments.find({ fileObjID: id })
+    .then((files) => res.json(files))
+    .catch((err) => res.status(400).json("Error: " + err));
+});
 
 // this is the second route http://localhost:5000/users/add
 // this will hand the posts requests
 router.route("/add").post((req, res) => {
   const comment = req.body.comment;
+  fileObjID = req.body.fileObjID;
 
-  const fileObjID = ObjectId.isValid(req.body.fileObjID)
-    ? new ObjectId(req.body.fileObjID)
-    : null;
-  //   const fileObjID = req.body.fileObjID;
-  console.log(fileObjID);
-  if (!fileObjID) {
-    res.status(400).json("Invalid file ID");
-    return; // Exit early if fileId is invalid
-  }
+  console.log("comment:" + comment);
 
-  try {
-  } catch (err) {}
+  // const fileObjID = ObjectId.isValid(req.body.fileObjID)
+  //   ? new ObjectId(req.body.fileObjID)
+  //   : null;
+  // //   const fileObjID = req.body.fileObjID;
+  // console.log(fileObjID);
+  // if (!fileObjID) {
+  //   res.status(400).json("Invalid file ID");
+  //   return; // Exit early if fileId is invalid
+  // }
+
+  // try {
+  // } catch (err) {
+  //   console.log("Error: " + err + " " + fileObjID);
+  // }
 
   const newComment = new RejectComments({
     comment,
