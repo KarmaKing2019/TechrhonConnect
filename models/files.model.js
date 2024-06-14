@@ -8,6 +8,8 @@ const FilesXrefSchema = new Schema(
     fileUrl: { type: String, required: false },
     status: { type: String, required: false },
     rejectComment: { type: String, required: false },
+    docType: { type: String, required: false },
+    invoiceValue: { type: String, required: false },
   },
   {
     timestamps: true, // include field for timestamp on when it was created

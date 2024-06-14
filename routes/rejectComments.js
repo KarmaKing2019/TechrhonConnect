@@ -41,21 +41,6 @@ router.route("/add").post((req, res) => {
 
   console.log("comment:" + comment);
 
-  // const fileObjID = ObjectId.isValid(req.body.fileObjID)
-  //   ? new ObjectId(req.body.fileObjID)
-  //   : null;
-  // //   const fileObjID = req.body.fileObjID;
-  // console.log(fileObjID);
-  // if (!fileObjID) {
-  //   res.status(400).json("Invalid file ID");
-  //   return; // Exit early if fileId is invalid
-  // }
-
-  // try {
-  // } catch (err) {
-  //   console.log("Error: " + err + " " + fileObjID);
-  // }
-
   const newComment = new RejectComments({
     comment,
     fileObjID,

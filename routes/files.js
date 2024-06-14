@@ -50,6 +50,9 @@ router.route("/add").post((req, res) => {
   const fileUrl = req.body.fileUrl;
   const status = req.body.status;
   const rejectComment = req.body.rejectComment;
+  const docType = req.body.docType;
+  const invoiceValue = req.body.invoiceValue;
+
   console.log(name);
 
   const newFileUpload = new File({
@@ -58,6 +61,8 @@ router.route("/add").post((req, res) => {
     fileUrl,
     status,
     rejectComment,
+    docType,
+    invoiceValue,
   });
   // console.log("Trying to upload to Xref"+JSON.stringify(newFileUpload));
 
